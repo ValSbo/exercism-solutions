@@ -1,35 +1,20 @@
 package blackjack
 
+var bjRuleset = map[string]int{
+	"ace": 11, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+	"eight": 8, "nine": 9, "ten": 10, "jack": 10, "queen": 10, "king": 10,
+}
+
 // ParseCard returns the integer value of a card following blackjack ruleset.
 func ParseCard(card string) int {
 
-	var parsedValue = 0
-	switch card {
-	case "ace":
-		parsedValue = 11
-	case "two":
-		parsedValue = 2
-	case "three":
-		parsedValue = 3
-	case "four":
-		parsedValue = 4
-	case "five":
-		parsedValue = 5
-	case "six":
-		parsedValue = 6
-	case "seven":
-		parsedValue = 7
-	case "eight":
-		parsedValue = 8
-	case "nine":
-		parsedValue = 9
-	case "ten", "jack", "queen", "king":
-		parsedValue = 10
-
-	default:
-		parsedValue = 0
+	parsedValue := bjRuleset[card]
+	if parsedValue != 0 {
+		return parsedValue
+	} else {
+		return 0
 	}
-	return parsedValue
+
 }
 
 // FirstTurn returns the decision for the first turn, given two cards of the
@@ -63,8 +48,6 @@ func FirstTurn(card1, card2, dealerCard string) string {
 		{
 			outcomeDecision = "H"
 		}
-	default:
-		outcomeDecision = "H"
 
 	}
 
@@ -77,11 +60,7 @@ func IsFaceCard(card string) bool {
 	var isFace = false
 
 	switch card {
-	case "jack":
-		isFace = true
-	case "queen":
-		isFace = true
-	case "king":
+	case "jack", "queen", "king":
 		isFace = true
 	default:
 		isFace = false
